@@ -2,7 +2,7 @@
 import PostList from './PostList';
 import useFetch from '../useFetch';
 const Home = () =>{
-   const {data:posts,isLoading,isError} = useFetch("http://localhost:8000/posts"); 
+   const {data:posts,isLoading,isError} = useFetch("https://backend-react-json-server.herokuapp.com/posts"); 
     return(
         <div className="Home">
         {!isError && isLoading && <div>Loading....</div>}

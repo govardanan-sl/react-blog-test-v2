@@ -17,7 +17,7 @@ const Create = () => {
             headers: {"Content-Type" : "application/json"},
             body : JSON.stringify(post)
         };
-        let url = "http://localhost:8000/posts"
+        let url = "https://backend-react-json-server.herokuapp.com/posts"
           fetch(url, requestOptions)
           .then((res) => {
               if(res.status!=201){

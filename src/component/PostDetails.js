@@ -3,10 +3,10 @@ import useFetch from '../useFetch';
 import {useHistory} from 'react-router-dom';
 const PostDetails = () =>{
     const { id } = useParams();
-    const {data:post ,isError:error, isLoading} = useFetch("http://localhost:8000/posts/"+id);
+    const {data:post ,isError:error, isLoading} = useFetch("https://backend-react-json-server.herokuapp.com/posts/"+id);
     const history = useHistory();
     const handleDelete = () => {
-        fetch('http://localhost:8000/posts/'+post.id,{
+        fetch('https://backend-react-json-server.herokuapp.com/posts'+post.id,{
             method:'DELETE'
         }).then(()=>{
             history.push('/');
