@@ -35,6 +35,12 @@
       "body": "Testing Redirects",
       "author": "Anonymous",
       "id": 9
+    },
+    {
+      "title": "Another App",
+      "body": "Just a clone",
+      "author": "Bruce",
+      "id": 10
     }
   ]
 }
