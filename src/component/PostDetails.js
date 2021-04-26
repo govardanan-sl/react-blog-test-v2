@@ -6,7 +6,7 @@ const PostDetails = () =>{
     const {data:post ,isError:error, isLoading} = useFetch("https://backend-react-json-server.herokuapp.com/posts/"+id);
     const history = useHistory();
     const handleDelete = () => {
-        fetch('https://backend-react-json-server.herokuapp.com/posts'+post.id,{
+        fetch('https://backend-react-json-server.herokuapp.com/posts/'+post.id,{
             method:'DELETE'
         }).then(()=>{
             history.push('/react-blog-test-v2');
