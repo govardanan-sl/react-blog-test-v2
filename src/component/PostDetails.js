@@ -9,7 +9,7 @@ const PostDetails = () =>{
         fetch('https://backend-react-json-server.herokuapp.com/posts'+post.id,{
             method:'DELETE'
         }).then(()=>{
-            history.push('/');
+            history.push('/react-blog-test-v2');
         }).catch((e)=>{
             console.log(e);
         });
