@@ -1,6 +1,6 @@
 import {useParams} from 'react-router-dom';
 import useFetch from '../useFetch';
-import {useHistory} from 'react-router-dom';
+import {useHistory,Link} from 'react-router-dom';
 const PostDetails = () =>{
     const { id } = useParams();
     const {data:post ,isError:error, isLoading} = useFetch("https://backend-react-json-server.herokuapp.com/posts/"+id);
@@ -21,7 +21,7 @@ const PostDetails = () =>{
             {post &&(
                 <article>
                     <h2>{post.title}</h2>
-                    <p>posted by {post.author}</p>
+                    <p>posted by <Link className="link-highlight" to={`/profile/${post.author_id}`}>{post.author}</Link></p>
                     <div>{post.body}</div>
                     <button onClick={handleDelete}>Delete</button>
                 </article>

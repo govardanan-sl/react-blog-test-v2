@@ -4,7 +4,12 @@ import Home from './component/Home';
 import Create from './component/Create';
 import PostDetails from './component/PostDetails';
 import NotFound from './component/NotFound';
+import Profile from './component/Profile';
+import ProfileDetails from './component/ProfileDetails';
+import Login from './component/Login/Login';
+
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
+
 function App() {
   return (
    <Router>
@@ -15,8 +20,17 @@ function App() {
             <Route exact path="/react-blog-test-v2">
               <Home></Home>
             </Route>
+            <Route path="/login">
+              <Login/>
+            </Route>
             <Route path="/create">
               <Create></Create>
+            </Route>
+            <Route path="/profile/:id">
+              <ProfileDetails></ProfileDetails>
+            </Route>
+            <Route path="/profile">
+              <Profile/>
             </Route>
             <Route path="/posts/:id">
               <PostDetails></PostDetails>

@@ -10,7 +10,7 @@ const PostList = ({posts,title}) =>{
                 <Link to={`/posts/${post.id}`}>
                  <h2>{post.title}</h2>
                  <p>{post.body}</p>
-                 <p>by {post.author}</p> 
+                 <p>by <Link to={`/profile/${post.author_id}`} className="link-highlight">{post.author}</Link></p> 
                 </Link>
             </div>
             ))}
