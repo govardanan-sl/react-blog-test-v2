@@ -5,12 +5,13 @@ const Create = () => {
     const [title,setTitle] =useState('');
     const [body,setBody] = useState('');
     const [author,setAuthor] =useState('');
+    const [author_id,setAuthor_id]=useState('1');
     const [isPending, setIsPending] = useState(false);
     const history = useHistory();
 
     const handleSubmit= (e) => {
         e.preventDefault();
-        const post = {title , body, author};
+        const post = {title , body, author, author_id};
         setIsPending(true);
         let requestOptions = {
             method: 'POST',
@@ -20,7 +21,7 @@ const Create = () => {
         let url = "https://backend-react-json-server.herokuapp.com/posts"
           fetch(url, requestOptions)
           .then((res) => {
-              if(res.status!=201){
+              if(res.status!==201){
                 throw Error(res.statusText);
               }else{
                 console.log("Posted");
@@ -57,6 +58,11 @@ const Create = () => {
                     onChange={(e)=>setAuthor(e.target.value)}
                     type="text"
                     required
+                />
+                <input 
+                    value={author_id}
+                    onChange={(e)=>setAuthor_id(e.target.value)}
+                    type="hidden"
                 />
                {!isPending&&<button type='submit'>
                     Post

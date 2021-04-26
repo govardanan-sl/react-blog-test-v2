@@ -7,6 +7,7 @@ import NotFound from './component/NotFound';
 import Profile from './component/Profile';
 import ProfileDetails from './component/ProfileDetails';
 import Login from './component/Login/Login';
+import Register from './component/Login/Register';
 
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
 
@@ -22,6 +23,9 @@ function App() {
             </Route>
             <Route path="/login">
               <Login/>
+            </Route>
+            <Route path="/register">
+              <Register></Register>
             </Route>
             <Route path="/create">
               <Create></Create>
