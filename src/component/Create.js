@@ -25,7 +25,7 @@ const Create = () => {
               }else{
                 console.log("Posted");
                 setIsPending(false);
-                history.push('/');
+                history.push('/react-blog-test-v2');
               }
           })
           .catch((e) => {
