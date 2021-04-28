@@ -8,6 +8,8 @@ import Profile from './component/Profile';
 import ProfileDetails from './component/ProfileDetails';
 import Login from './component/Login/Login';
 import Register from './component/Login/Register';
+import HomeNew from './component/Home/Home';
+import ErrorBoundary from './component/ErrorBoundary/ErrorBoundary';
 
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
 
@@ -17,6 +19,7 @@ function App() {
       <div className="App">
         <Navbar/>
         <div className="content">
+        <ErrorBoundary>
           <Switch>
             <Route exact path="/react-blog-test-v2">
               <Home></Home>
@@ -39,10 +42,14 @@ function App() {
             <Route path="/posts/:id">
               <PostDetails></PostDetails>
             </Route>
+            <Route path="/new-home">
+              <HomeNew/>
+            </Route>
             <Route path="*">
               <NotFound></NotFound>
             </Route>
           </Switch>
+        </ErrorBoundary>
         </div>
       </div>
     </Router>

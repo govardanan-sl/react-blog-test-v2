@@ -19,7 +19,7 @@ const Register = () => {
             headers: {"Content-Type" : "application/json"},
             body : JSON.stringify(profile)
         };
-        let url = "https://backend-react-json-server.herokuapp.com/profile"
+        let url = "https://backend-react-json-server.herokuapp.com/profile/"
           fetch(url, requestOptions)
           .then((res) => {
               if(res.status!==201){
