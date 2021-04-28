@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
+import { UserProfileID } from '../../contexts/UserProfileID';
 // import PostList from '../PostList';
 // import useFetch from '../../useFetch';
 import PostList from '../PostList';
+
 class Home extends Component {
+    static contextType = UserProfileID;
     constructor(props){
         super(props);
         this.state={
@@ -54,8 +57,10 @@ class Home extends Component {
         this.abortController.abort();
     }
     render() {
+        const {isLoggedIn, profile_id } = this.context;
         return (
             <div className="home">
+                {isLoggedIn&&<h2>Welcome Back, {profile_id}</h2>}
                 <h1>Home Page</h1>
                 {!this.state.isError && this.state.isLoading && <div>Loading....</div>}
                 {this.state.isError && 
@@ -64,7 +69,7 @@ class Home extends Component {
                     </div>
                 }
                 {this.state.posts && <PostList posts={this.state.posts} title="All Posts"></PostList>}
-                {this.state.posts && <PostList posts={this.state.posts.filter((post)=>post.author ==='bruce')} title="My Posts"/>}
+                {profile_id&&this.state.posts && <PostList posts={this.state.posts.filter((post)=>post.author_id ===profile_id)} title="My Posts"/>}
             </div>
         )
     }

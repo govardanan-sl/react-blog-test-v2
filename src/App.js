@@ -12,11 +12,13 @@ import HomeNew from './component/Home/Home';
 import ErrorBoundary from './component/ErrorBoundary/ErrorBoundary';
 
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
+import UserProfileIDContextProvider from './contexts/UserProfileID';
 
 function App() {
   return (
    <Router>
       <div className="App">
+      <UserProfileIDContextProvider>
         <Navbar/>
         <div className="content">
         <ErrorBoundary>
@@ -33,10 +35,10 @@ function App() {
             <Route path="/create">
               <Create></Create>
             </Route>
-            <Route path="/profile/:id">
+            <Route exact path="/profile/:id">
               <ProfileDetails></ProfileDetails>
             </Route>
-            <Route path="/profile">
+            <Route exact path="/profile">
               <Profile/>
             </Route>
             <Route path="/posts/:id">
@@ -51,6 +53,7 @@ function App() {
           </Switch>
         </ErrorBoundary>
         </div>
+        </UserProfileIDContextProvider>
       </div>
     </Router>
   );

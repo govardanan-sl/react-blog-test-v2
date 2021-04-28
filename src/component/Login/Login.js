@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { UserProfileID } from '../../contexts/UserProfileID';
 import loginImg from './login.svg'
 import "./style.scss";
 
 const Login = () => {
+    const {Loggout} = useContext(UserProfileID);
     return (
         <div className="base-container">
         <div className="header">Login</div>
@@ -28,7 +30,7 @@ const Login = () => {
                     width: '7rem',
                     height: '3rem',
                     marginLeft: '6rem'
-        }}>
+        }} onClick={Loggout} >
             Login
         </button>
         </div>

@@ -1,10 +1,11 @@
 import React from 'react'
 import useFetch from '../useFetch';
-
+import {useContext} from 'react';
+import { UserProfileID } from '../contexts/UserProfileID';
 
 function Profile() {
-    const { data:name ,isError:error, isLoading} = useFetch("https://backend-react-json-server.herokuapp.com/profile/1");
-    // console.log(name,error);
+    const userId = useContext(UserProfileID);
+    const { data:name ,isError:error, isLoading} = useFetch("https://backend-react-json-server.herokuapp.com/profile/"+userId.profile_id);
     return (
         <div>
             {error&&<h2>Error Occured</h2>}

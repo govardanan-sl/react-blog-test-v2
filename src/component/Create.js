@@ -1,22 +1,23 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { UserProfileID } from "../contexts/UserProfileID";
 
 const Create = () => {
+    const {profile_id} = useContext(UserProfileID);
     const [title,setTitle] =useState('');
     const [body,setBody] = useState('');
     const [author,setAuthor] =useState('');
-    const [author_id,setAuthor_id]=useState('1');
     const [isPending, setIsPending] = useState(false);
     const history = useHistory();
-    const myRef = useRef();
+    const inputRef = useRef();
 
     useEffect(() => {
-        myRef.current.focus();
+        inputRef.current.focus();
     }, []);
 
     const handleSubmit= (e) => {
         e.preventDefault();
-        const post = {title , body, author, author_id};
+        const post = {title , body, author,author_id: profile_id};
         setIsPending(true);
         let requestOptions = {
             method: 'POST',
@@ -34,8 +35,8 @@ const Create = () => {
                 history.push('/react-blog-test-v2');
               }
           })
-          .catch((e) => {
-              console.log(e.message);
+          .catch((err) => {
+              console.log(err.message);
               setIsPending(false);
           });
 
@@ -50,7 +51,7 @@ const Create = () => {
                     required
                     value={title}
                     onChange={(e)=>setTitle(e.target.value)}
-                    ref={myRef}
+                    ref={inputRef}
                 />
                 <label>Post Body : </label>
                 <textarea
@@ -64,11 +65,6 @@ const Create = () => {
                     onChange={(e)=>setAuthor(e.target.value)}
                     type="text"
                     required
-                />
-                <input 
-                    value={author_id}
-                    onChange={(e)=>setAuthor_id(e.target.value)}
-                    type="hidden"
                 />
                {!isPending&&<button type='submit'>
                     Post
