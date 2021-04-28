@@ -4,7 +4,7 @@ import useFetch from '../useFetch';
 
 function Profile() {
     const { data:name ,isError:error, isLoading} = useFetch("https://backend-react-json-server.herokuapp.com/profile/1");
-    console.log(name,error);
+    // console.log(name,error);
     return (
         <div>
             {error&&<h2>Error Occured</h2>}

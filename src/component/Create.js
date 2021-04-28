@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 const Create = () => {
@@ -8,6 +8,11 @@ const Create = () => {
     const [author_id,setAuthor_id]=useState('1');
     const [isPending, setIsPending] = useState(false);
     const history = useHistory();
+    const myRef = useRef();
+
+    useEffect(() => {
+        myRef.current.focus();
+    }, []);
 
     const handleSubmit= (e) => {
         e.preventDefault();
@@ -45,6 +50,7 @@ const Create = () => {
                     required
                     value={title}
                     onChange={(e)=>setTitle(e.target.value)}
+                    ref={myRef}
                 />
                 <label>Post Body : </label>
                 <textarea

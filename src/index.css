@@ -47,6 +47,7 @@ button{
 .post-preview:hover {
   box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
 }
+
 .post-preview h2 {
   font-size: 20px;
   color: #f1356d;
@@ -93,9 +94,15 @@ button{
   width: 100%;
   padding: 6px 10px;
   margin: 10px 0;
-  border: 1px solid #ddd;
+  border: 1px solid #f9aac1;
   box-sizing: border-box;
   display: block;
+}
+.create input:focus{
+  box-shadow: 1px 3px 5px rgb(241, 53, 109);
+}
+.create textarea:focus{
+  box-shadow: 1px 3px 5px rgb(241, 53, 109);
 }
 .create button {
   background: #f1356d;
