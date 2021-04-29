@@ -3,7 +3,7 @@ import PostList from './PostList';
 import useFetch from '../useFetch';
 import { Link } from 'react-router-dom';
 const Home = () =>{
-   const {data:posts,isLoading,isError} = useFetch("https://backend-react-json-server.herokuapp.com/posts"); 
+   const {data:posts,isLoading,isError} = useFetch("https://backend-react-json-server.herokuapp.com/posts",{headers:new Headers()}); 
     return(
         <div className="Home">
             <div className="moved-out" style={
