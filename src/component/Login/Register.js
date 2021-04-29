@@ -16,8 +16,8 @@ const Register = () => {
         let isExists=false;
         let token=null;
         e.preventDefault();
-        const profile = {name:username , email,password};
         const user= {email,password}
+        let profile = {name:username , email};
         setIsPending(true);
         let requestOptions = {
             method: 'POST',
@@ -35,10 +35,12 @@ const Register = () => {
                 return res.json();
               }
           }).then(result => {
+            
              token=result.access_token;
              if(!isExists){
                 let profHeaders = new Headers();
-                profHeaders.append("Authorization","Bearer "+token)
+                profHeaders.append("Authorization","Bearer "+token);
+                profHeaders.append("Content-Type","application/json")
                 requestOptions = {
                     method: 'POST',
                     headers: profHeaders,

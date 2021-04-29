@@ -6,7 +6,11 @@ const useFetch = (url,requestOptions) => {
 
     useEffect(() => {
         const abortFetch = new AbortController();
-          fetch(url,{signal : abortFetch.signal},requestOptions)
+          let reqOps = requestOptions;
+          let usefHeaders = requestOptions.headers;
+          usefHeaders.append('signal',abortFetch.signal);
+          reqOps.headers=usefHeaders;
+          fetch(url,reqOps)
             .then(response => {
                 if(!response.ok){
                     throw Error("Could not Fetch data");

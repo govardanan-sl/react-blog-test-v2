@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { UserProfileID } from "../contexts/UserProfileID";
 
 const Create = () => {
-    const {profile_id} = useContext(UserProfileID);
+    const {profile_id,accessToken} = useContext(UserProfileID);
     const [title,setTitle] =useState('');
     const [body,setBody] = useState('');
     const [author,setAuthor] =useState('');
@@ -19,12 +19,16 @@ const Create = () => {
         e.preventDefault();
         const post = {title , body, author,author_id: profile_id};
         setIsPending(true);
+        var createPostHeader = new Headers();
+        createPostHeader.append("Authorization", "Bearer "+accessToken);
+        createPostHeader.append("Content-Type", "application/json");
         let requestOptions = {
             method: 'POST',
-            headers: {"Content-Type" : "application/json"},
+            Authorization : "Bearer "+accessToken,
+            headers: createPostHeader,
             body : JSON.stringify(post)
         };
-        let url = "https://backend-react-json-server.herokuapp.com/posts"
+        let url = "https://backend-react-json-server-auth.herokuapp.com/posts"
           fetch(url, requestOptions)
           .then((res) => {
               if(res.status!==201){
