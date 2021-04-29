@@ -3,7 +3,11 @@ import useFetch from "../useFetch";
 
 const ProfileDetails = () => {
     const { id } = useParams();
-    const {data:profile ,isError:error, isLoading} = useFetch("https://backend-react-json-server.herokuapp.com/profile/"+id);
+    let requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+    const {data:profile ,isError:error, isLoading} = useFetch("https://backend-react-json-server.herokuapp.com/profile/"+id,requestOptions);
     
     return (
         <div className="profile-container">

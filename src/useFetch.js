@@ -6,11 +6,6 @@ const useFetch = (url,requestOptions) => {
 
     useEffect(() => {
         const abortFetch = new AbortController();
-
-            let requestOptions = {
-            method: 'GET',
-            redirect: 'follow'
-          };
           fetch(url,{signal : abortFetch.signal},requestOptions)
             .then(response => {
                 if(!response.ok){

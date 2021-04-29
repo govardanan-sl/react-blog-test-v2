@@ -1,45 +1,80 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom';
+import { UserProfileID } from '../../contexts/UserProfileID';
 import loginImg from './login.svg';
 import './style.scss';
 
 const Register = () => {
+    const {isLoggedIn,SetAccessToken} = useContext(UserProfileID);
     const [username,setUsername] = useState('');
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
     const [isPending, setIsPending] = useState(false);
     const history = useHistory();
-
+    
     const handleSubmit = (e) =>{
+        let isExists=false;
+        let token=null;
         e.preventDefault();
-        const profile = {name:username , email};
+        const profile = {name:username , email,password};
+        const user= {email,password}
         setIsPending(true);
         let requestOptions = {
             method: 'POST',
             headers: {"Content-Type" : "application/json"},
-            body : JSON.stringify(profile)
+            body : JSON.stringify(user)
         };
-        let url = "https://backend-react-json-server.herokuapp.com/profile/"
+        let url = "https://backend-react-json-server-auth.herokuapp.com/auth/register";
           fetch(url, requestOptions)
           .then((res) => {
-              if(res.status!==201){
+              if(res.status!==200){
+                isExists=true;
                 throw Error(res.statusText);
               }else{
                 console.log("New User Added");
-                setIsPending(false);
-                history.push('/react-blog-test-v2');
+                return res.json();
               }
+          }).then(result => {
+             token=result.access_token;
+             if(!isExists){
+                let profHeaders = new Headers();
+                profHeaders.append("Authorization","Bearer "+token)
+                requestOptions = {
+                    method: 'POST',
+                    headers: profHeaders,
+                    body : JSON.stringify(profile)
+                };
+                url = "https://backend-react-json-server-auth.herokuapp.com/profile/"
+                 fetch(url, requestOptions)
+                .then((res) => {
+                  if(res.status!==201){
+                    throw Error(res.statusText);
+                  }else{
+                    console.log("New Profile Added");
+                    setIsPending(false);
+                    // history.push('/react-blog-test-v2');
+                    return res.json();
+                  }
+                }).then(result=>{
+                    SetAccessToken(token,result.id);
+                    console.log("Registered Successfully");
+                    history.push('/react-blog-test-v2');
+                })
+                .catch((err) => {
+                  console.log(err.message);
+                  setIsPending(false);
+                });
+            }
           })
-          .catch((e) => {
-              console.log(e.message);
+          .catch((err) => {
+              console.log(err.message);
               setIsPending(false);
           });
-
     }
     return (
         <div className="base-container">
         <div className="header"><h2>Register</h2></div>
-        <div className="content">
+        {!isLoggedIn&&<div className="content">
         <div className="image">
             <img src={loginImg} alt="just a decoration"/>
         </div>
@@ -80,7 +115,7 @@ const Register = () => {
              </div>
         </div>
 
-        {!isPending&&<button type="submit" style = {{
+        {!isLoggedIn&&!isPending&&<button type="submit" style = {{
                     color:"white",
                     backgroundColor : "#f1356d",
                     borderRadius : '8px',
@@ -91,7 +126,8 @@ const Register = () => {
             Register
         </button>}
         </form>
-        </div>
+        </div>}
+        {isLoggedIn&&<h1>You already have an account!! You Are Logged In</h1>}
         </div>
     );
 }

@@ -3,7 +3,11 @@ import useFetch from '../useFetch';
 import {useHistory,Link} from 'react-router-dom';
 const PostDetails = () =>{
     const { id } = useParams();
-    const {data:post ,isError:error, isLoading} = useFetch("https://backend-react-json-server.herokuapp.com/posts/"+id);
+    let requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+    const {data:post ,isError:error, isLoading} = useFetch("https://backend-react-json-server.herokuapp.com/posts/"+id,requestOptions);
     const history = useHistory();
     const handleDelete = () => {
         fetch('https://backend-react-json-server.herokuapp.com/posts/'+post.id,{

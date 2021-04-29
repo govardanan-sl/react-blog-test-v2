@@ -23,8 +23,11 @@ function App() {
         <div className="content">
         <ErrorBoundary>
           <Switch>
+            <Route exact path="/">
+              <Home/>
+            </Route>
             <Route exact path="/react-blog-test-v2">
-              <Home></Home>
+              <HomeNew/>
             </Route>
             <Route path="/login">
               <Login/>

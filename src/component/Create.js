@@ -13,7 +13,7 @@ const Create = () => {
 
     useEffect(() => {
         inputRef.current.focus();
-    }, []);
+    }, [inputRef]);
 
     const handleSubmit= (e) => {
         e.preventDefault();
@@ -66,12 +66,13 @@ const Create = () => {
                     type="text"
                     required
                 />
-               {!isPending&&<button type='submit'>
+               {profile_id&&!isPending&&<button type='submit'>
                     Post
                 </button>}
                 {isPending&&<button disabled>
                     Please Wait...    
                 </button>}
+                {!profile_id&&<h2 className="error">Login to Post</h2>}
             </form>
         </div>
     );

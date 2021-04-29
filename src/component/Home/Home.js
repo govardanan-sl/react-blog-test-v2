@@ -60,7 +60,7 @@ class Home extends Component {
         const {isLoggedIn, profile_id } = this.context;
         return (
             <div className="home">
-                {isLoggedIn&&<h2>Welcome Back, {profile_id}</h2>}
+                {isLoggedIn&&<h2>Welcome Back</h2>}
                 <h1>Home Page</h1>
                 {!this.state.isError && this.state.isLoading && <div>Loading....</div>}
                 {this.state.isError && 
