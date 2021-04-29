@@ -1,13 +1,19 @@
 import {useParams} from 'react-router-dom';
 import useFetch from '../useFetch';
 import {useHistory,Link} from 'react-router-dom';
+import { useContext } from 'react';
+import { UserProfileID } from '../contexts/UserProfileID';
 const PostDetails = () =>{
     const { id } = useParams();
+    const {accessToken} = useContext(UserProfileID);
+    let postDetailHeaders = new Headers();
+    postDetailHeaders.append("Authorization","Bearer "+accessToken);
     let requestOptions = {
         method: 'GET',
-        redirect: 'follow'
+        redirect: 'follow',
+        headers: postDetailHeaders
     };
-    const {data:post ,isError:error, isLoading} = useFetch("https://backend-react-json-server.herokuapp.com/posts/"+id,requestOptions);
+    const {data:post ,isError:error, isLoading} = useFetch("https://backend-react-json-server-auth.herokuapp.com/posts/"+id,requestOptions);
     const history = useHistory();
     const handleDelete = () => {
         fetch('https://backend-react-json-server.herokuapp.com/posts/'+post.id,{
