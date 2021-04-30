@@ -25,17 +25,29 @@ class ProfileDetails extends Component {
         };
         fetch(url,requestOptions)
         .then(response => {
+            if(response.status===401){
+                return response.json();
+            }
             if(!response.ok){
                 throw Error("Could not Fetch data");
             }
             return response.json();
         })
         .then(result => {
-            this.setState({
-                profileData : result,
-                isLoading : false,
-                isError:false
-            })
+            if(result.message==="Access token not provided"){
+                this.setState({
+                    profileData : null,
+                    isLoading : false,
+                    isError:"Login Expired"
+                })
+                throw Error("Login Expired");
+            }else{
+                this.setState({
+                    profileData : result,
+                    isLoading : false,
+                    isError:false
+                })
+            }
         })
         .catch((e) =>{
             if(e.name==='AbortError'){
@@ -63,7 +75,7 @@ class ProfileDetails extends Component {
         return (
             <div className="profile-container">
             {accessToken&&!this.state.isError&&this.state.isLoading&&<div>Loading Profile...</div>}
-            {accessToken&&this.state.isError &&<div>{this.state.isError}!!{<br></br>}Profile not found</div>}
+            {accessToken&&this.state.isError &&<div className="error">{this.state.isError}!!{<br></br>}Profile not found</div>}
             {this.state.profileData &&(
                 <div className="profile-data"> 
                     <h2>Name : {this.state.profileData.name}</h2>

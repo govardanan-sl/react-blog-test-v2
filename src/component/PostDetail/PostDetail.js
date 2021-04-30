@@ -27,17 +27,29 @@ class PostDetail extends Component {
         };
         fetch(url,requestOptions)
         .then(response => {
+            if(response.status===401){
+                return response.json();
+            }
             if(!response.ok){
                 throw Error("Could not Fetch data");
             }
             return response.json();
         })
         .then(result => {
-            this.setState({
-                postData : result,
-                isLoading : false,
-                isError:false
-            })
+            if(result.message==="Access token not provided"){
+                this.setState({
+                    postData : null,
+                    isLoading : false,
+                    isError:"Login Expired"
+                })
+                throw Error("Login Expired");
+            }else{
+                this.setState({
+                    postData : result,
+                    isLoading : false,
+                    isError:false
+                })
+            }
         })
         .catch((e) =>{
             if(e.name==='AbortError'){
@@ -86,7 +98,7 @@ class PostDetail extends Component {
         return (
             <div className="post-details">
             {!this.state.isError&&this.state.isLoading&&<div>Loading Post...</div>}
-            {this.state.isError&&<div>{this.state.isError}!!{<br></br>}Post not found</div>}
+            {this.state.isError&&<div className="error">{this.state.isError}!!{<br></br>}</div>}
             {this.state.postData &&(
                 <article>
                     <h2>{this.state.postData.title}</h2>

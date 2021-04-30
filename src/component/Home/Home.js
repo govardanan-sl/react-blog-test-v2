@@ -28,17 +28,29 @@ class Home extends Component {
         };
         fetch(url,requestOptions)
         .then(response => {
+            if(response.status===401){
+                return response.json();
+            }
             if(!response.ok){
                 throw Error("Could not Fetch data");
             }
             return response.json();
         })
         .then(result => {
-            this.setState({
-                posts : result,
-                isLoading : false,
-                isError:false
-            })
+            if(result.message==="Access token not provided"){
+                this.setState({
+                    posts : null,
+                    isLoading : false,
+                    isError:"Login Expired"
+                })
+                throw Error("Login Expired");
+            }else{
+                this.setState({
+                    posts : result,
+                    isLoading : false,
+                    isError:false
+                })
+            }
         })
         .catch((e) =>{
             if(e.name==='AbortError'){
@@ -46,14 +58,14 @@ class Home extends Component {
             }else{
                 console.log(e.message);
                 this.setState({
-                    isError:e.message
+                    isError:e.message,
+                    isLoading:false
                 });
             }
         });
     }
     componentDidMount(){
         const {accessToken} = this.context;
-        console.log(accessToken);
         if(accessToken){
             this.fetchPosts();
         }

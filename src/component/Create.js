@@ -8,6 +8,7 @@ const Create = () => {
     const [body,setBody] = useState('');
     const [author,setAuthor] =useState('');
     const [isPending, setIsPending] = useState(false);
+    const [isError,setIsError]=useState(false);
     const history = useHistory();
     const inputRef = useRef();
 
@@ -41,6 +42,7 @@ const Create = () => {
           })
           .catch((err) => {
               console.log(err.message);
+              setIsError(true);
               setIsPending(false);
           });
 
@@ -70,9 +72,10 @@ const Create = () => {
                     type="text"
                     required
                 />
-               {profile_id&&!isPending&&<button type='submit'>
+               {profile_id&&!isPending&&!isError&&<button type='submit'>
                     Post
                 </button>}
+                {isError&&<h2 className="error">Login Expired</h2>}
                 {isPending&&<button disabled>
                     Please Wait...    
                 </button>}

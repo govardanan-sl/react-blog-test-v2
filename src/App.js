@@ -3,7 +3,7 @@ import Navbar from './component/Navbar';
 import Home from './component/Home';
 import Create from './component/Create';
 import PostDetails from './component/PostDetail/PostDetail';
-import NotFound from './component/NotFound';
+import NotFound from './component/NotFound/NotFound';
 import ProfileDetails from './component/ProfileDetails/ProfileDetails';
 import Login from './component/Login/Login';
 import Register from './component/Login/Register';
@@ -24,7 +24,7 @@ function App() {
         <ErrorBoundary>
           <Switch>
             <Route exact path="/">
-              <Home/>
+              <HomeNew/>
             </Route>
             <Route exact path="/react-blog-test-v2">
               <HomeNew/>
@@ -47,8 +47,8 @@ function App() {
             <Route path="/posts/:id">
               <PostDetails></PostDetails>
             </Route>
-            <Route path="/new-home">
-              <HomeNew/>
+            <Route path="/old-home">
+              <Home/>
             </Route>
             <Route path="*">
               <NotFound></NotFound>

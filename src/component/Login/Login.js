@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { UserProfileID } from '../../contexts/UserProfileID';
 import loginImg from './login.svg'
 import "./style.scss";
@@ -10,6 +10,7 @@ const Login = () => {
     const [password,setPassword] = useState('');
     const [isPending, setIsPending] = useState(false);
     const [isInvalidUser,setIsInvalidUser] = useState(false);
+    const history=useHistory();
     const handleSubmit = (e) =>{
         e.preventDefault();
         const user= {email,password}
@@ -35,6 +36,7 @@ const Login = () => {
           .then(result =>{
             SetAccessToken(result.access_token,result.id);
             console.log("Logged In successfully");
+            history.push('/react-blog-test-v2');
           })
           .catch((err) => {
             console.log(err.message);
@@ -90,13 +92,16 @@ const Login = () => {
            Don't Have an account?? Register!!
         </Link>
         </div>}
-        {isLoggedIn&&<h2 style={
+        {isLoggedIn&&
+        <div>
+        <h2 style={
             {
                 margin:'1rem'
             }
-        }>You are already Logged In</h2>}
+        }>You are already Logged In</h2><br></br>
+        Click Here To Go <Link to="/react-blog-test-v2" className="link-highlight">To Home</Link></div>}
         </div>
     );
 }
 
-export default Login
+export default Login;
