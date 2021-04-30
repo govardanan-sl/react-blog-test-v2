@@ -1,23 +1,21 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
 import { UserProfileID } from '../../contexts/UserProfileID';
-// import PostList from '../PostList';
-// import useFetch from '../../useFetch';
-import PostList from '../PostList';
 
-class Home extends Component {
+class Profile extends Component {
     static contextType = UserProfileID;
     constructor(props){
         super(props);
         this.state={
-            posts : [],
+            profileData : null,
             isLoading : true,
             isError : null
         }
     }
     abortController = new window.AbortController();
     fetchPosts(){
-        const {accessToken} = this.context;
-        let url ="https://backend-react-json-server-auth.herokuapp.com/posts";
+        const {accessToken,profile_id} = this.context;
+        let url ="https://backend-react-json-server-auth.herokuapp.com/profile/"+profile_id;
         let homeHeaders = new Headers();
         homeHeaders.append("Authorization","Bearer "+accessToken);
         homeHeaders.append("signal",this.abortController.signal);
@@ -35,9 +33,9 @@ class Home extends Component {
         })
         .then(result => {
             this.setState({
-                posts : result,
+                profileData : result,
                 isLoading : false,
-                isError:false,
+                isError:false
             })
         })
         .catch((e) =>{
@@ -53,32 +51,28 @@ class Home extends Component {
     }
     componentDidMount(){
         const {accessToken} = this.context;
-        console.log(accessToken);
         if(accessToken){
             this.fetchPosts();
         }
     }
-    componentWillUnmount() {
+    componentWillUnmount(){
         this.abortController.abort();
     }
     render() {
-        const {isLoggedIn, profile_id,accessToken } = this.context;
+        const {profile_id} = this.context; 
         return (
-            <div className="home">
-                {isLoggedIn&&<h2>Welcome Back</h2>}
-                <h1>Home Page</h1>
-                {!this.state.isError && this.state.isLoading && accessToken&&<div>Loading....</div>}
-                {this.state.isError && 
-                    <div> 
-                        <h2 style={{color:"#ff003cf0"}}>{this.state.isError}</h2>
-                    </div>
-                }
-                {this.state.posts && <PostList posts={this.state.posts} title="All Posts"></PostList>}
-                {profile_id&&this.state.posts && <PostList posts={this.state.posts.filter((post)=>post.author_id ===profile_id)} title="My Posts"/>}
-                {!accessToken&&<h1 className="error">Please Login</h1>}
-            </div>
+            <div>
+            {!profile_id&&<h1><Link to="/login"  className="link-highlight">Please Login</Link></h1>}
+            {profile_id&&this.state.isError&&<h2>Error Occured</h2>}
+            {profile_id&&this.state.isLoading&&<h2>Loading!!...</h2>}
+            <h2>Profile</h2>
+            {profile_id&&<div className="profile-container">
+               <p> Name : {!this.state.isError&&this.state.profileData&&this.state.profileData.name}</p>
+               <p> Status : {}</p>
+            </div>}
+        </div>
         )
     }
 }
 
-export default Home;
+export default Profile;

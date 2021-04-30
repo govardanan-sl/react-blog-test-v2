@@ -1,23 +1,20 @@
 import React, { Component } from 'react'
 import { UserProfileID } from '../../contexts/UserProfileID';
-// import PostList from '../PostList';
-// import useFetch from '../../useFetch';
-import PostList from '../PostList';
-
-class Home extends Component {
+import { withRouter } from "react-router";
+class ProfileDetails extends Component {
     static contextType = UserProfileID;
     constructor(props){
         super(props);
         this.state={
-            posts : [],
+            profileData : null,
             isLoading : true,
             isError : null
         }
     }
     abortController = new window.AbortController();
-    fetchPosts(){
+    fetchPosts(id){
         const {accessToken} = this.context;
-        let url ="https://backend-react-json-server-auth.herokuapp.com/posts";
+        let url ="https://backend-react-json-server-auth.herokuapp.com/profile/"+id;
         let homeHeaders = new Headers();
         homeHeaders.append("Authorization","Bearer "+accessToken);
         homeHeaders.append("signal",this.abortController.signal);
@@ -35,9 +32,9 @@ class Home extends Component {
         })
         .then(result => {
             this.setState({
-                posts : result,
+                profileData : result,
                 isLoading : false,
-                isError:false,
+                isError:false
             })
         })
         .catch((e) =>{
@@ -52,33 +49,31 @@ class Home extends Component {
         });
     }
     componentDidMount(){
+        const id = this.props.match.params.id;
         const {accessToken} = this.context;
-        console.log(accessToken);
         if(accessToken){
-            this.fetchPosts();
+            this.fetchPosts(id);
         }
     }
-    componentWillUnmount() {
+    componentWillUnmount(){
         this.abortController.abort();
     }
     render() {
-        const {isLoggedIn, profile_id,accessToken } = this.context;
+        const {accessToken}=this.context;
         return (
-            <div className="home">
-                {isLoggedIn&&<h2>Welcome Back</h2>}
-                <h1>Home Page</h1>
-                {!this.state.isError && this.state.isLoading && accessToken&&<div>Loading....</div>}
-                {this.state.isError && 
-                    <div> 
-                        <h2 style={{color:"#ff003cf0"}}>{this.state.isError}</h2>
-                    </div>
-                }
-                {this.state.posts && <PostList posts={this.state.posts} title="All Posts"></PostList>}
-                {profile_id&&this.state.posts && <PostList posts={this.state.posts.filter((post)=>post.author_id ===profile_id)} title="My Posts"/>}
-                {!accessToken&&<h1 className="error">Please Login</h1>}
-            </div>
+            <div className="profile-container">
+            {accessToken&&!this.state.isError&&this.state.isLoading&&<div>Loading Profile...</div>}
+            {accessToken&&this.state.isError &&<div>{this.state.isError}!!{<br></br>}Profile not found</div>}
+            {this.state.profileData &&(
+                <div className="profile-data"> 
+                    <h2>Name : {this.state.profileData.name}</h2>
+                    <p>Email : {this.state.profileData.email}</p>
+                </div>
+            )}
+            {!accessToken&&<h1 className="error">Please Login</h1>}
+        </div>
         )
     }
 }
 
-export default Home;
+export default withRouter(ProfileDetails);

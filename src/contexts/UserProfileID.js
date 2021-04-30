@@ -28,6 +28,21 @@ class UserProfileIDContextProvider extends Component{
             accessToken:token
         })
     }
+    componentDidMount(){
+        /*const localData = JSON.parse(localStorage.getItem('UserProfileData'));
+        if(localData){
+            this.setState(localData);
+        }else{
+            this.setState({
+                isLoggedIn : false,
+                profile_id : null,
+                accessToken:null
+            })
+        }*/
+    }
+    componentDidUpdate(){
+        localStorage.setItem('UserProfileData',JSON.stringify(this.state))
+    }
     render(){
         return (
             <UserProfileID.Provider value={{...this.state,LoggedIn:this.LoggedIn,Loggout:this.Loggout,SetAccessToken:this.SetAccessToken}}>
