@@ -37,7 +37,7 @@ class Home extends Component {
             this.setState({
                 posts : result,
                 isLoading : false,
-                isError:false,
+                isError:false
             })
         })
         .catch((e) =>{

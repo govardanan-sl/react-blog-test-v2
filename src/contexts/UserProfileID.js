@@ -28,8 +28,8 @@ class UserProfileIDContextProvider extends Component{
             accessToken:token
         })
     }
-    componentDidMount(){
-        /*const localData = JSON.parse(localStorage.getItem('UserProfileData'));
+    componentWillMount(){
+        const localData = JSON.parse(localStorage.getItem('UserProfileData'));
         if(localData){
             this.setState(localData);
         }else{
@@ -38,7 +38,7 @@ class UserProfileIDContextProvider extends Component{
                 profile_id : null,
                 accessToken:null
             })
-        }*/
+        }
     }
     componentDidUpdate(){
         localStorage.setItem('UserProfileData',JSON.stringify(this.state))
