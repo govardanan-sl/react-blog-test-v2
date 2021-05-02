@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import { UserProfileID } from '../../contexts/UserProfileID';
-
+import './style.scss';
 class Profile extends Component {
     static contextType = UserProfileID;
     constructor(props){
@@ -73,14 +73,18 @@ class Profile extends Component {
     render() {
         const {profile_id} = this.context; 
         return (
-            <div>
+            <div className="">
             {!profile_id&&<h1><Link to="/login"  className="link-highlight">Please Login</Link></h1>}
             {profile_id&&this.state.isError&&<h2 className="error">{this.state.isError}</h2>}
             {profile_id&&this.state.isLoading&&<h2>Loading!!...</h2>}
             <h2>Profile</h2>
-            {profile_id&&<div className="profile-container">
+            {profile_id&&<div className="container center">
+            <div className="card">
+               <h2>Profile</h2>
+               <hr/>
                <p> Name : {!this.state.isError&&this.state.profileData&&this.state.profileData.name}</p>
                <p> Status : {}</p>
+            </div>   
             </div>}
         </div>
         )
