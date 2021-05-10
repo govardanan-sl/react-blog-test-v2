@@ -99,7 +99,7 @@ const Login = () => {
                 margin:'1rem'
             }
         }>You are already Logged In</h2><br></br>
-        Click Here To Go <Link to="/react-blog-test-v2" className="link-highlight">To Home</Link></div>}
+        Click Here To Go <Link to="/react-blog-test-v2" className="link-highlight">Home</Link></div>}
         </div>
     );
 }
