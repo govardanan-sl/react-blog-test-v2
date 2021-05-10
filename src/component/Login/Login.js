@@ -89,7 +89,7 @@ const Login = () => {
                marginTop: '1rem',
                fontSize:'1.2rem'
             }}>
-           Don't Have an account?? Register!!
+           Don't Have an account?? Register!
         </Link>
         </div>}
         {isLoggedIn&&
