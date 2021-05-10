@@ -15,6 +15,9 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+.post-preview:hover {
+  cursor: pointer;
+}
 .App * {
   text-decoration: none;
 }
