@@ -1,13 +1,25 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {Link} from 'react-router-dom';
 import { UserProfileID } from '../contexts/UserProfileID';
 
 const Navbar= () =>{
     const {profile_id,isLoggedIn,Loggout} = useContext(UserProfileID);
+    const [mobileMenu,setMobileMenu] = useState(false);
+    const handleWindowResize = () =>{
+        if(window.innerWidth<700){
+            setMobileMenu(true);
+        }else{
+            setMobileMenu(false);
+        }
+    }
+    useEffect(()=>{
+        handleWindowResize();
+        window.addEventListener('resize',handleWindowResize);
+    },[])
     return (
         <nav className="navbar">
            <Link to ='/react-blog-test-v2'><h1>The Social Media App</h1></Link>
-            <div className="links">
+           {!mobileMenu&& <div className="links">
                 <Link to = "/react-blog-test-v2">Home</Link>
                 <Link to = "/profile">Profile</Link>
                 <Link to = "/">About</Link>
@@ -26,7 +38,8 @@ const Navbar= () =>{
                     backgroundColor : "#f1356d",
                     borderRadius : '8px'
                 }} onClick={Loggout}>Logout</Link>}
-            </div>
+            </div> }
+            {mobileMenu&&<div>Mobile Menu</div>}
         </nav>
     )
 }
